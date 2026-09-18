@@ -9,4 +9,5 @@ variants:
   - power_button
   - main_control_knob
   - brightness_controller
-  features_selection_file: variants/Sleep/config.txt
+  feature_selection:
+    file: variants/Sleep/config.txt

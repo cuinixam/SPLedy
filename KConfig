@@ -1,7 +1,3 @@
-# Zephyr's tree, when Zephyr is the build owner; skipped everywhere else
-# (kconfiglib resolves it against $srctree, which only Zephyr points at itself).
-osource "Kconfig.zephyr"
-
 menu "Features"
     config BLINKING
         bool "Blinking Feature"

@@ -9,7 +9,8 @@ variants:
   - power_button
   - main_control_knob
   - brightness_controller
-  features_selection_file: variants/Spa/config.txt
+  feature_selection:
+    file: variants/Spa/config.txt
   platforms:
     arduino_uno_r3:
       components: [arduino_button, arduino_led]

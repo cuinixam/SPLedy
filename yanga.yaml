@@ -1,3 +1,9 @@
+feature_model:
+  description: SPLed product features
+  file: KConfig
+  pipeline:
+  - step: KConfigEdit
+    module: yanga_core.steps.kconfig_edit
 pipeline:
   install:
   # The env script is not part of the fragment: a platform may need to publish

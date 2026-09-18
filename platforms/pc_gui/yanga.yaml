@@ -43,7 +43,7 @@ platforms:
       - report
     generators:
       - step: CreateSharedLibraryCMakeGenerator
-        file: platforms/pc_gui/create_shared_library.py
+        module: yanga.cmake.create_shared_library
         config:
           use_global_includes: false
       - step: ObjectsDepsCMakeGenerator

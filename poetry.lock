@@ -3801,14 +3801,14 @@ dev = ["pytest", "setuptools"]
 
 [[package]]
 name = "yanga"
-version = "2.37.1"
+version = "2.39.0"
 description = "Yet another ninja generator to build C/CPP projects."
 optional = false
 python-versions = "<4.0,>=3.10"
 groups = ["main"]
 files = [
-    {file = "yanga-2.37.1-py3-none-any.whl", hash = "sha256:218efd0ed5f8cef113734faf2d8c3eb8bd975e0a87bd379dec3cd5a5fdb43fa4"},
-    {file = "yanga-2.37.1.tar.gz", hash = "sha256:577b125df1f262a4d908e76e5383c2e1c71c3ac60f27f9a60f4b2313402cfc5c"},
+    {file = "yanga-2.39.0-py3-none-any.whl", hash = "sha256:4c055170903e94b902b40575cfbc8762d0d47cba33d8574faf7306ec00bf4bee"},
+    {file = "yanga-2.39.0.tar.gz", hash = "sha256:d1776ebb501450e294481436b9c6c7cbf0816bf8dcde1b9b0c51c7af90964c29"},
 ]
 
 [package.dependencies]
@@ -3825,23 +3825,24 @@ poks = ">=0,<1"
 py-app-dev = ">=2.20,<3"
 pypeline-runner = ">=1.38,<2"
 typer = ">=0,<1"
-yanga-core = ">=0.10,<1"
+yanga-core = ">=0.12,<1"
 
 [[package]]
 name = "yanga-core"
-version = "0.10.0"
+version = "0.12.0"
 description = "Core library for C/C++ software product line engineering."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "yanga_core-0.10.0-py3-none-any.whl", hash = "sha256:ce40ec60ad24900f1c676947259ab9f3fcb1274d684dbf5c742e2ec023e00676"},
-    {file = "yanga_core-0.10.0.tar.gz", hash = "sha256:c62072ef5d00c871600d53b09af28ba7108873b79957b86d7de1c566ea6f4fb9"},
+    {file = "yanga_core-0.12.0-py3-none-any.whl", hash = "sha256:a2ca5c3e248557909569534ead755107e4878eaeaca2f4c578757e327ad4ee2f"},
+    {file = "yanga_core-0.12.0.tar.gz", hash = "sha256:4677bf669346d74f02ba1ebc1b2a8521979b1e07702c0cb2f6e70004790e0839"},
 ]
 
 [package.dependencies]
 clanguru = ">=0,<1"
-kspl = ">=1,<2"
+kconfiglib = ">=14,<15"
+kspl = ">=1.10.1,<2"
 mashumaro = ">=3.13,<4"
 pick = ">=2.2,<3"
 py-app-dev = ">=2.22,<3"
@@ -3963,4 +3964,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = "<4.0,>=3.11"
-content-hash = "50f1871e12aa1ec9c66a6f2f1287194c48f03261d5af9ff8cf29722c18313b81"
+content-hash = "ad198d4b4dd8ebb3d1483be630eae27fc687c3608800c0e0921c9cb977b014bf"

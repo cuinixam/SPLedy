@@ -1,0 +1,1 @@
+# Disco's Zephyr selection for the ESP32-H2, written by `yanga features --variant Disco --platform zephyr_esp32h2`.

@@ -18,10 +18,12 @@ pipeline:
     file: platforms/zephyr/steps.py
   - step: GenerateEnvSetupScript
     module: pypeline.steps.env_setup_script
+  # The product feature model is Zephyr-independent: its header comes from the same step as on
+  # every other platform, and Zephyr's Kconfig no longer sees the product's symbols.
+  - step: KConfigGen
+    module: yanga_core.steps.kconfig_gen
   - step: GenerateBuildSystemFiles
     module: yanga.cmake.steps
-  - step: GenerateZephyrVariantConfig
-    file: platforms/zephyr/steps.py
   # Reads what the generators registered, so it comes after GenerateBuildSystemFiles.
   - step: GenerateReportConfig
     module: yanga_core.steps.generate_report_config

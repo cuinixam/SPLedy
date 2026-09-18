@@ -1,0 +1,4 @@
+# The Zephyr platforms' feature model: Zephyr's own Kconfig tree, nothing of the product's.
+# Loadable only inside a Zephyr build, which is why the feature model pipeline opens it through
+# Zephyr's own Kconfig target (see steps.py, ZephyrFeatures).
+source "Kconfig.zephyr"

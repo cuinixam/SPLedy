@@ -14,7 +14,8 @@
 
 ### Key Concepts
 
-- **Feature Model**: KConfig-based variability (`KConfig` file defines features; variants select them in `config.txt`)
+- **Feature Model**: KConfig-based variability (`KConfig` file defines features; variants select them in `config.txt`). `KConfigGen` turns that selection into `<build>/kconfig/autoconf.h` on every platform, Zephyr included
+- **Platform Feature Model**: a platform may bring a second, independent model. The Zephyr platforms declare Zephyr's own tree ([platforms/zephyr/KConfig](platforms/zephyr/KConfig)); a variant selects from it in `variants/<Name>/<platform>.txt`, which the build passes to Zephyr as an `EXTRA_CONF_FILE`. The two models share no symbols and neither loads the other
 - **Component Dependencies**: Declared in `components/yanga.yaml` via `required_components`
 - **Runtime Environment (RTE)**: Message passing abstraction between components (`components/rte/`)
 - **Platform Adapters**: Hardware/OS interfaces (e.g., `arduino_button`)
@@ -61,6 +62,9 @@ The devcontainer has all dependencies pre-installed (including yanga). Simply ru
 yanga run
 ```
 
+Terminal use of the same image, and the wrinkles that come with it, are in
+[doc/how-to/build-in-a-container.md](doc/how-to/build-in-a-container.md).
+
 ### Build Variants
 
 ```powershell
@@ -80,11 +84,24 @@ pytest test/test_Disco.py      # Test Disco variant on all platforms
 
 ### Feature Configuration
 
-```powershell
-# GUI menu to select features
-poetry run guiconfig
-# Set KCONFIG_CONFIG env var to target variant config file
+```bash
+# Product features of a variant: kconfiglib's editor on variants/<Name>/config.txt
+yanga features --variant Disco
+yanga features --variant Disco --no-gui   # terminal editor
+
+# Every variant's product selection side by side, read-only
+yanga features
+
+# Zephyr options for a variant on one platform: Zephyr's own editor, and the change is
+# written into variants/Disco/zephyr_esp32h2.txt when it is closed
+yanga features --variant Disco --platform zephyr_esp32h2
 ```
+
+Each `feature_model:` block declares the pipeline that opens its editor: the product model uses
+yanga's `KConfigEdit`, the Zephyr platforms use `ZephyrFeatures` in
+[platforms/zephyr/steps.py](platforms/zephyr/steps.py), which runs
+[platforms/zephyr/kconfig_frontend.py](platforms/zephyr/kconfig_frontend.py) as a Zephyr Kconfig
+target. A platform's selection cannot be edited without a variant.
 
 ## Project-Specific Conventions
 
@@ -109,7 +126,8 @@ poetry run guiconfig
 variants:
 - name: MyVariant
   components: [rte, spled, power_button]  # Core components
-  features_selection_file: variants/MyVariant/config.txt
+  feature_selection:
+    file: variants/MyVariant/config.txt
   platforms:
     gtest:
       components: [test_integrations_spled]  # Platform-specific components

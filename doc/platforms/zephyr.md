@@ -16,11 +16,14 @@ yanga run --variant Disco --platform zephyr_esp32h2
 
 The image lands in `.yanga/build/variants/<variant>/<platform>/zephyr/`. `--target report`
 builds the variant report (component docs, targets, objects dependencies; the objects graph
-includes Zephyr's own libraries) under `reports/`. Any other
-Zephyr build target goes through `--target`, for example `--target menuconfig` opens
-Zephyr's Kconfig editor over the merged tree. Changes made there land in that build's
-`.config` only; the product's features live in `variants/<variant>/config.txt` and are
-edited with `yanga features --edit`.
+includes Zephyr's own libraries) under `reports/`.
+
+Zephyr's options are the platform's own feature model, separate from the product's `KConfig`.
+`yanga features --variant Disco --platform zephyr_esp32h2` opens Zephyr's editor on it and writes
+what changed into `variants/Disco/zephyr_esp32h2.txt`, which the build merges as an
+`EXTRA_CONF_FILE`. Zephyr's `menuconfig`/`guiconfig` targets are not exposed: they edit the build's
+`.config` only, and the next configure throws that away. The product's features stay in
+`variants/<variant>/config.txt`, edited with `yanga features --variant Disco`.
 
 ## Run the simulator
 

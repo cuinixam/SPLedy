@@ -8,7 +8,8 @@ variants:
   - light_controller
   - power_button
   - main_control_knob
-  features_selection_file: variants/Disco/config.txt
+  feature_selection:
+    file: variants/Disco/config.txt
   platforms:
     gtest:
       components: [test_integrations_spled]
@@ -16,3 +17,7 @@ variants:
       components: [arduino_button, arduino_led]
     tc375:
       components: [tc375_button, tc375_led]
+    zephyr_esp32h2:
+      feature_selection:
+        description: Disco's Zephyr options on the ESP32-H2
+        file: variants/Disco/zephyr_esp32h2.txt
