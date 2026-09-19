@@ -98,9 +98,8 @@ yanga features --variant Disco --platform zephyr_esp32h2
 ```
 
 Each `feature_model:` block declares the pipeline that opens its editor: the product model uses
-yanga's `KConfigEdit`, the Zephyr platforms use `ZephyrFeatures` in
-[platforms/zephyr/steps.py](platforms/zephyr/steps.py), which runs
-[platforms/zephyr/kconfig_frontend.py](platforms/zephyr/kconfig_frontend.py) as a Zephyr Kconfig
+yanga's `KConfigEdit`, the Zephyr platforms use `ZephyrFeatures` from `yanga.zephyr.steps`
+(installed with `yanga[zephyr]`), which runs yanga's `kconfig_frontend.py` as a Zephyr Kconfig
 target. A platform's selection cannot be edited without a variant.
 
 ## Project-Specific Conventions

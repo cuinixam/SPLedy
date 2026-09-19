@@ -5,7 +5,10 @@ Zephyr's `native_sim` board (Linux only), `zephyr_esp32h2` targets the ESP32-H2 
 Zephyr drives the build; yanga contributes the variant as a generated CMake fragment
 that `platforms/zephyr` includes. Everything below runs through `yanga run`, which
 provisions west, the toolchains from poks and the Zephyr workspace under
-`.yanga/zephyr` on first use.
+`.yanga/zephyr` on first use. That workspace is separate from the shared `.yanga/ext`
+the other platforms clone into: a west workspace holds one manifest, and Zephyr keeps
+reading it after the clone for its `west build`/`west flash`/`west blobs` commands and
+its module discovery, so it must not be overwritten by the next platform's install.
 
 ## Build
 

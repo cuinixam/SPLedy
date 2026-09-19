@@ -48,10 +48,12 @@ platforms:
       pipeline:
         - include: pipeline/zephyr.yaml
         - step: ZephyrFeatures
-          file: platforms/zephyr/steps.py
+          module: yanga.zephyr.steps
           config: &zephyr_sim_config
             board: native_sim/native/64
             toolchain: host
+            kconfig_root: platforms/zephyr/KConfig
+            app_config_dir: platforms/zephyr/app
     build_targets: [all, flash, report]
     components: [platform_types, zephyr_adapters, zephyr_led_gpio]
     configs:
@@ -68,7 +70,7 @@ platforms:
         file: platforms/zephyr/app.cmake
     generators:
       - step: ZephyrCMakeGenerator
-        file: platforms/zephyr/steps.py
+        module: yanga.zephyr.cmake
       - step: ObjectsDepsCMakeGenerator
         module: yanga.cmake.objects_deps
       - step: TargetsDataCMakeGenerator
@@ -78,7 +80,7 @@ platforms:
     pipeline:
       - include: pipeline/zephyr.yaml
       - step: ZephyrBuild
-        file: platforms/zephyr/steps.py
+        module: yanga.zephyr.steps
         config: *zephyr_sim_config
 
   - name: zephyr_esp32h2
@@ -92,12 +94,14 @@ platforms:
       pipeline:
         - include: pipeline/zephyr.yaml
         - step: ZephyrFeatures
-          file: platforms/zephyr/steps.py
+          module: yanga.zephyr.steps
           # The editor configures the same build as ZephyrBuild, so it needs the same board
           # and toolchain; the anchor keeps them from drifting apart.
           config: &zephyr_esp32h2_config
             board: esp32h2_devkitm/esp32h2
             toolchain: cross-compile
+            kconfig_root: platforms/zephyr/KConfig
+            app_config_dir: platforms/zephyr/app
             toolchain_app: riscv64-zephyr-elf
             # Zephyr's sysroot detection composes a doubled path when a toolchain
             # ships more than one libc; naming it skips that code. Relative to the toolchain.
@@ -118,7 +122,7 @@ platforms:
         file: platforms/zephyr/app.cmake
     generators:
       - step: ZephyrCMakeGenerator
-        file: platforms/zephyr/steps.py
+        module: yanga.zephyr.cmake
       - step: ObjectsDepsCMakeGenerator
         module: yanga.cmake.objects_deps
       - step: TargetsDataCMakeGenerator
@@ -132,5 +136,5 @@ platforms:
       - step: FetchEspressifBlobs
         run: west blobs fetch hal_espressif --allow-regex lib/esp32h2/
       - step: ZephyrBuild
-        file: platforms/zephyr/steps.py
+        module: yanga.zephyr.steps
         config: *zephyr_esp32h2_config

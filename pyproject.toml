@@ -6,7 +6,7 @@ authors = [{ name = "Avengineers" }]
 requires-python = "<4.0,>=3.11"
 
 dependencies = [
-    "yanga>=2.39,<3",
+    "yanga[zephyr]>=2.40,<3",
     "pytest>=8,<9",
     "myst-parser>=4.0,<5",
     "pypeline-semantic-release>=0.4.1,<0.5.0",
@@ -16,15 +16,7 @@ dependencies = [
     "sphinx-test-reports>=1.0,<2",
     "sphinx-rtd-size>=0.2,<1",
     "sphinxcontrib-plantuml>=0.29,<1",
-    # Zephyr platforms: west plus Zephyr's build-time Python dependencies
-    # (deps/zephyr/scripts/requirements-base.txt) and the ESP32 flashing tool.
-    "west>=1.2,<2",
-    "pyelftools>=0.29",
-    "PyYAML>=6.0",
-    "pykwalify>=1.8",
-    "jsonschema>=4.0",
-    "packaging>=23.0",
-    "requests>=2.32.4",
+    # The ESP32 flashing tool. Zephyr's own Python needs come with yanga[zephyr].
     "esptool>=5.2.0",
 ]
 

@@ -3801,14 +3801,14 @@ dev = ["pytest", "setuptools"]
 
 [[package]]
 name = "yanga"
-version = "2.39.0"
+version = "2.40.0"
 description = "Yet another ninja generator to build C/CPP projects."
 optional = false
 python-versions = "<4.0,>=3.10"
 groups = ["main"]
 files = [
-    {file = "yanga-2.39.0-py3-none-any.whl", hash = "sha256:4c055170903e94b902b40575cfbc8762d0d47cba33d8574faf7306ec00bf4bee"},
-    {file = "yanga-2.39.0.tar.gz", hash = "sha256:d1776ebb501450e294481436b9c6c7cbf0816bf8dcde1b9b0c51c7af90964c29"},
+    {file = "yanga-2.40.0-py3-none-any.whl", hash = "sha256:719182459bd412574f4c898409ab2c126f24dcd8ee18f6e08a018edaa139002d"},
+    {file = "yanga-2.40.0.tar.gz", hash = "sha256:7471b3f4cf9ffc854544a1ac2ef75026a5fcc5354dd8eed662735bd52483ed53"},
 ]
 
 [package.dependencies]
@@ -3816,16 +3816,25 @@ clanguru = ">=0,<1"
 cookiecutter = ">=2.1,<3"
 customtkinter = ">=5.2,<6"
 gcovr = ">=8.3,<9"
+jsonschema = {version = ">=4", optional = true, markers = "extra == \"zephyr\""}
 kspl = ">=1.10.1,<2"
 loguru = ">=0,<1"
 mashumaro = ">=3.5,<4"
+packaging = {version = ">=23", optional = true, markers = "extra == \"zephyr\""}
 pick = ">=2.2,<3"
 pillow = ">=10.1,<11"
 poks = ">=0,<1"
 py-app-dev = ">=2.20,<3"
+pyelftools = {version = ">=0.29", optional = true, markers = "extra == \"zephyr\""}
+pykwalify = {version = ">=1.8", optional = true, markers = "extra == \"zephyr\""}
 pypeline-runner = ">=1.38,<2"
+pyyaml = {version = ">=6", optional = true, markers = "extra == \"zephyr\""}
+requests = {version = ">=2.32.4", optional = true, markers = "extra == \"zephyr\""}
 typer = ">=0,<1"
 yanga-core = ">=0.12,<1"
+
+[package.extras]
+zephyr = ["jsonschema (>=4)", "packaging (>=23)", "pyelftools (>=0.29)", "pykwalify (>=1.8)", "pyyaml (>=6)", "requests (>=2.32.4)"]
 
 [[package]]
 name = "yanga-core"
@@ -3964,4 +3973,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = "<4.0,>=3.11"
-content-hash = "ad198d4b4dd8ebb3d1483be630eae27fc687c3608800c0e0921c9cb977b014bf"
+content-hash = "783af9c1ffa691f281c7fed8afc98999c7aa597d1a5b15a2ec155e5041e5f39e"

@@ -15,7 +15,7 @@ pipeline:
       revision_scoped_paths: true
   # Must come before the env setup script, which bakes the context's variables into it.
   - step: ZephyrSetup
-    file: platforms/zephyr/steps.py
+    module: yanga.zephyr.steps
   - step: GenerateEnvSetupScript
     module: pypeline.steps.env_setup_script
   # The product feature model is Zephyr-independent: its header comes from the same step as on
