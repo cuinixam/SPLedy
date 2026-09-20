@@ -138,3 +138,50 @@ platforms:
       - step: ZephyrBuild
         module: yanga.zephyr.steps
         config: *zephyr_esp32h2_config
+
+  - name: zephyr_esp32h2_waveshare
+    description: Zephyr on the Waveshare ESP32-H2-DEV-KIT-N4, a board defined in this repository
+    # The same build as zephyr_esp32h2 on a board Zephyr does not ship: its definition
+    # lives in platforms/zephyr/boards/, which zephyr.cmake adds to BOARD_ROOT.
+    feature_model:
+      description: Zephyr options for zephyr_esp32h2_waveshare
+      file: KConfig
+      pipeline:
+        - include: pipeline/zephyr.yaml
+        - step: ZephyrFeatures
+          module: yanga.zephyr.steps
+          config: &zephyr_esp32h2_waveshare_config
+            board: esp32h2_dev_kit_n4/esp32h2
+            toolchain: cross-compile
+            kconfig_root: platforms/zephyr/KConfig
+            app_config_dir: platforms/zephyr/app
+            toolchain_app: riscv64-zephyr-elf
+            sysroot: picolibc/riscv64-zephyr-elf
+    build_targets: [all, flash, report]
+    components: [platform_types, zephyr_adapters, zephyr_led_ws2812]
+    configs:
+      - id: west
+        file: platforms/zephyr/west.yaml
+      - id: poks
+        file: platforms/zephyr/poks.json
+      - id: vars
+        content:
+          PLATFORM_CMAKE_SETUP: platforms/zephyr/zephyr.cmake
+      - id: cmake
+        file: platforms/zephyr/app.cmake
+    generators:
+      - step: ZephyrCMakeGenerator
+        module: yanga.zephyr.cmake
+      - step: ObjectsDepsCMakeGenerator
+        module: yanga.cmake.objects_deps
+      - step: TargetsDataCMakeGenerator
+        module: yanga.cmake.targets_data
+      - step: ReportCMakeGenerator
+        module: yanga.cmake.reports
+    pipeline:
+      - include: pipeline/zephyr.yaml
+      - step: FetchEspressifBlobs
+        run: west blobs fetch hal_espressif --allow-regex lib/esp32h2/
+      - step: ZephyrBuild
+        module: yanga.zephyr.steps
+        config: *zephyr_esp32h2_waveshare_config

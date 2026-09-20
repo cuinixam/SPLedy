@@ -21,3 +21,7 @@ variants:
       feature_selection:
         description: Disco's Zephyr options on the ESP32-H2
         file: variants/Disco/zephyr_esp32h2.txt
+    zephyr_esp32h2_waveshare:
+      feature_selection:
+        description: Disco's Zephyr options on the Waveshare ESP32-H2 board
+        file: variants/Disco/zephyr_esp32h2_waveshare.txt

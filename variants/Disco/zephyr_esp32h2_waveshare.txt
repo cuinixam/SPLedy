@@ -1,0 +1,1 @@
+# Disco's Zephyr selection for the Waveshare ESP32-H2 board, written by `yanga features --variant Disco --platform zephyr_esp32h2_waveshare`.

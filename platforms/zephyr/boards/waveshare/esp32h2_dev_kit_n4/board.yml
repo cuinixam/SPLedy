@@ -1,0 +1,6 @@
+board:
+  name: esp32h2_dev_kit_n4
+  full_name: Waveshare ESP32-H2-DEV-KIT-N4
+  vendor: waveshare
+  socs:
+  - name: esp32h2

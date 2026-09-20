@@ -46,6 +46,8 @@ class Test_Disco:
             # The riscv64 toolchain comes from poks on every OS; native_sim needs a Linux host.
             pytest.param("zephyr_sim", "all", marks=pytest.mark.skipif(sys.platform != "linux", reason="native_sim is Linux-only")),
             ("zephyr_esp32h2", "all"),
+            # A board defined in this repository (platforms/zephyr/boards), not in Zephyr.
+            ("zephyr_esp32h2_waveshare", "all"),
         ],
     )
     def test_build(self, platform: str, target: str):

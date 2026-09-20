@@ -13,6 +13,7 @@ same on every row. Select one with `yanga run --variant <variant> --platform <pl
 | `tc375` | Infineon AURIX TC375 ShieldBuddy with tricore-elf GCC |
 | `zephyr_sim` | Zephyr `native_sim`, host compiler (Linux only) |
 | `zephyr_esp32h2` | Zephyr on the ESP32-H2 devkit, riscv64-zephyr-elf from poks |
+| `zephyr_esp32h2_waveshare` | The same on the Waveshare ESP32-H2-DEV-KIT-N4, a board defined in this repository |
 
 ```{toctree}
 :maxdepth: 2

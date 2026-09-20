@@ -1,7 +1,8 @@
 # Zephyr platforms
 
-Two platforms build the same variants on Zephyr: `zephyr_sim` runs on the host as
-Zephyr's `native_sim` board (Linux only), `zephyr_esp32h2` targets the ESP32-H2 DevKitM.
+Three platforms build the same variants on Zephyr: `zephyr_sim` runs on the host as
+Zephyr's `native_sim` board (Linux only), `zephyr_esp32h2` targets the ESP32-H2 DevKitM,
+`zephyr_esp32h2_waveshare` a board defined in this repository (see "A board of our own").
 Zephyr drives the build; yanga contributes the variant as a generated CMake fragment
 that `platforms/zephyr` includes. Everything below runs through `yanga run`, which
 provisions west, the toolchains from poks and the Zephyr workspace under
@@ -67,6 +68,25 @@ whenever the colour changes, with the value printed next to it. Use `picocom`
 bytes untouched, so the 24-bit colour escape reaches the terminal. `screen` re-renders
 and quantises the colour to a grey block that never appears to change, and `cat` does
 not open the pseudo terminal slave reliably.
+
+## A board of our own
+
+Zephyr has no definition for the Waveshare ESP32-H2-DEV-KIT-N4 the demo runs on, so
+`zephyr_esp32h2` builds for Espressif's DevKitM (same module, same pins) and adds what
+differs in `platforms/zephyr/app/boards/esp32h2_devkitm.overlay`: the onboard WS2812 LED
+and the three buttons SPLed wires to header pins.
+
+`zephyr_esp32h2_waveshare` shows the other way: the board is defined in this repository,
+under `platforms/zephyr/boards/waveshare/esp32h2_dev_kit_n4/`, with the same files a board
+in Zephyr's tree has (`board.yml`, `Kconfig.<board>`, `<board>_defconfig`, `board.cmake`,
+the devicetree). The LED and the buttons are part of the board's `.dts`, so the
+application needs no overlay for it. One line in `platforms/zephyr/zephyr.cmake` makes Zephyr
+look there: `list(APPEND BOARD_ROOT ...)` before `find_package(Zephyr)`. The platform
+in `platforms/zephyr/yanga.yaml` differs from `zephyr_esp32h2` only in its `board:`.
+
+```bash
+yanga run --variant Disco --platform zephyr_esp32h2_waveshare
+```
 
 ## Flash the ESP32-H2
 

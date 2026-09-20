@@ -1,0 +1,7 @@
+# Waveshare ESP32-H2-DEV-KIT-N4 board configuration
+#
+# The board carries an ESP32-H2-MINI-1-N4 module: the same SoC choice as
+# Zephyr's esp32h2_devkitm, from which this definition was copied.
+
+config BOARD_ESP32H2_DEV_KIT_N4
+	select SOC_ESP32_H2_MINI_H4
