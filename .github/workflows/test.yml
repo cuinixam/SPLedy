@@ -66,3 +66,39 @@ jobs:
       - name: Execute Tests for ${{ matrix.variant }}
         run: .venv/bin/python -m pytest -k "Test_${{ matrix.variant }}"
         shell: bash
+
+  test-wsl:
+    name: Test Disco (WSL)
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: wsl-bash {0}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Set up WSL
+        uses: Vampire/setup-wsl@v7
+        with:
+          distribution: Ubuntu-24.04
+          # build-essential: the poks compilers link against the distro's libc and gcc runtime.
+          additional-packages: git python3-venv pipx build-essential
+      # Clone into the Linux file system with Linux git, as a WSL user would: LF line endings, no /mnt.
+      - name: Clone into WSL
+        run: |
+          git config --global --add safe.directory '*'
+          git clone --no-checkout "$(wslpath '${{ github.workspace }}')" ~/spled
+          git -C ~/spled checkout ${{ github.sha }}
+      # The bootstrap needs Python 3.13; Ubuntu 24.04 ships 3.12.
+      - name: Install Python 3.13
+        run: |
+          add-apt-repository -y ppa:deadsnakes/ppa
+          apt-get install -y --no-install-recommends python3.13 python3.13-venv
+      - name: Install pypeline runner
+        run: pipx install "pypeline-runner>=1.23"
+      - name: Run pypeline
+        run: cd ~/spled && ~/.local/bin/pypeline run --config-file yanga.yaml --step CreateVEnv --single
+      - name: Execute Tests for Disco
+        run: cd ~/spled && .venv/bin/python -m pytest -k "Test_Disco"
