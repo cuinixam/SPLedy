@@ -128,15 +128,19 @@ components:
     scope: PUBLIC
   required_components:
   - rte
+- name: light_application
+  description: Turns the button and knob inputs into the light output
+  subcomponents:
+  - power_signal_processing
+  - light_controller
+  - power_button
+  - main_control_knob
 - name: test_integrations_spled
-  sources:
-  - spled/src/spled.c
-  - rte/src/rte.c
-  - brightness_controller/src/brightness_controller.c
-  - light_controller/src/light_controller.c
-  - main_control_knob/src/main_control_knob.c
-  - power_button/src/power_button.c
-  - power_signal_processing/src/power_signal_processing.c
+  integrates:
+  - spled
+  - rte
+  - brightness_controller
+  - light_application
   testing:
     sources:
     - spled/test/test_spled_integration.cc

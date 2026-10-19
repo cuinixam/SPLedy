@@ -4,10 +4,7 @@ variants:
   components:
   - rte
   - spled
-  - power_signal_processing
-  - light_controller
-  - power_button
-  - main_control_knob
+  - light_application
   feature_selection:
     file: variants/Disco/config.txt
   platforms:
