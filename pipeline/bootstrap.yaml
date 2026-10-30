@@ -5,7 +5,7 @@ pipeline:
     module: pypeline.steps.create_venv
     config:
       bootstrap_script: .bootstrap/bootstrap.py
-      python_version: "3.13"
+      python_version: "3.13.17"
       python_package_manager: poetry>=2.2
   - step: PoksInstall
     module: yanga_core.steps.poks_install
