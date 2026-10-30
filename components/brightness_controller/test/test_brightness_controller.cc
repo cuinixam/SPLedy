@@ -21,12 +21,10 @@ extern "C"
 #ifdef CONFIG_BRIGHTNESS_ADJUSTMENT_AUTOMATIC
 
 /**
- * @docs
- * ```{test} {{ gtest.test }}
- *    :id: TS_BC-002
- *    :tests: SWDD_BC-100, SWDD_BC-102, SWDD_BC-203
- * ```
- * @enddocs
+ * @trace {{ gtest.test }}
+ * type: test
+ * id: TS_BC-002
+ * tests: SWDD_BC-100, SWDD_BC-102, SWDD_BC-203
  */
 TEST(brightness_controller, test_brightness_ramp)
 {
@@ -66,12 +64,10 @@ TEST(brightness_controller, test_brightness_ramp)
 }
 
 /**
- * @docs
- * ```{test} {{ gtest.test }}
- *    :id: TS_BC-003
- *    :tests: SWDD_BC-200, SWDD_BC-202, SWDD_BC-203
- * ```
- * @enddocs
+ * @trace {{ gtest.test }}
+ * type: test
+ * id: TS_BC-003
+ * tests: SWDD_BC-200, SWDD_BC-202, SWDD_BC-203
  */
 TEST(brightness_controller, test_brightness_controller_auto)
 {
@@ -101,12 +97,10 @@ TEST(brightness_controller, test_brightness_controller_auto)
 #else /* CONFIG_BRIGHTNESS_ADJUSTMENT_AUTOMATIC */
 
 /**
- * @docs
- * ```{test} {{ gtest.test }}
- *    :id: TS_BC-001
- *    :tests: SWDD_BC-100, SWDD_BC-101, SWDD_BC-200, SWDD_BC-201, SWDD_BC-202
- * ```
- * @enddocs
+ * @trace {{ gtest.test }}
+ * type: test
+ * id: TS_BC-001
+ * tests: SWDD_BC-100, SWDD_BC-101, SWDD_BC-200, SWDD_BC-201, SWDD_BC-202
  */
 TEST(brightness_controller, test_brightness_knob)
 {

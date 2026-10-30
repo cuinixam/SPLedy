@@ -13,13 +13,10 @@ extern "C"
 #include "mockup_power_signal_processing.h"
 
 /*!
- * @docs
- * ```{test} {{ gtest.test }}
- *    :id: TS_PSP-001
- *    :tests: SWDD_PSP-001
- *
- * ```
- * @enddocs
+ * @trace {{ gtest.test }}
+ * type: test
+ * id: TS_PSP-001
+ * tests: SWDD_PSP-001
  */
 TEST(power_signal_processing, test_power_stays_off)
 {
@@ -33,13 +30,10 @@ TEST(power_signal_processing, test_power_stays_off)
 }
 
 /*!
- * @docs
- * ```{test} {{ gtest.test }}
- *    :id: TS_PSP-002
- *    :tests: SWDD_PSP-002, SWDD_PSP-003
- *
- * ```
- * @enddocs
+ * @trace {{ gtest.test }}
+ * type: test
+ * id: TS_PSP-002
+ * tests: SWDD_PSP-002, SWDD_PSP-003
  */
 TEST(power_signal_processing, test_power_toggles)
 {

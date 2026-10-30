@@ -8,12 +8,10 @@
 
 /**
  *
- * @docs
- * ```{impl} Power signal processing
- *    :id: SWIMPL_PSP-001
- *    :implements: SWDD_PSP-001, SWDD_PSP-002, SWDD_PSP-003
- * ```
- * @enddocs
+ * @trace Power signal processing
+ * type: impl
+ * id: SWIMPL_PSP-001
+ * implements: SWDD_PSP-001, SWDD_PSP-002, SWDD_PSP-003
  */
 void powerSignalProcessing(void)
 {

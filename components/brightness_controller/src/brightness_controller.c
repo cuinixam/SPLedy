@@ -1,6 +1,17 @@
 /**
  * @file brightness_controller.c
  * @brief Module to control the brightness.
+ *
+ * @docs
+ * The brightness controller sets the brightness of the LED. Its runnable
+ * computes a brightness value from 0 to 255 in every task cycle and writes it
+ * to the RTE.
+ *
+ * The Kconfig choice `BRIGHTNESS_ADJUSTMENT` selects the mode:
+ *
+ * - `BRIGHTNESS_ADJUSTMENT_AUTOMATIC`: the brightness ramps up and down by itself.
+ * - `BRIGHTNESS_ADJUSTMENT_MANUAL`: the brightness follows the main control knob.
+ * @enddocs
  */
 
 #include "brightness_controller.h"
@@ -8,14 +19,26 @@
 
 #ifdef CONFIG_BRIGHTNESS_ADJUSTMENT_AUTOMATIC
 
+/**
+ * @docs
+ * In automatic mode the brightness ramps linearly from a minimum up to a
+ * maximum and back down. `BRIGHTNESS_ADJUSTMENT_PERIOD` sets the length of one
+ * full cycle in seconds. The controller converts it to task cycles and also
+ * writes the current cycle position to the RTE.
+ * @enddocs
+ */
 #define BRIGHTNESS_PERIOD_TICKS ((unsigned int)((CONFIG_BRIGHTNESS_ADJUSTMENT_PERIOD * 1000) / BRIGHTNESS_TASK_PERIOD))
 
 /**
  * @docs
- * ```{impl} Periodic Brightness Adjustment
- *    :id: SWIMPL_BC-001
- *    :implements: SWDD_BC-100, SWDD_BC-102
- * ```
+ * Returns the brightness for the current position in the cycle and moves the
+ * position one task cycle ahead. The first half of the cycle ramps up, the
+ * second half ramps down.
+
+ * @trace Periodic Brightness Adjustment
+ * type: impl
+ * id: SWIMPL_BC-001
+ * implements: SWDD_BC-100, SWDD_BC-102
  * @enddocs
  */
 SPLE_TESTABLE_STATIC brightness_t periodicBrightnessAdjustment(BrightnessAdjustmentData *data)
@@ -43,11 +66,13 @@ SPLE_TESTABLE_STATIC brightness_t periodicBrightnessAdjustment(BrightnessAdjustm
 
 /**
  * @docs
- * ```{impl} Manual Brightness Adjustment
- *    :id: SWIMPL_BC-002
- *    :implements: SWDD_BC-100, SWDD_BC-101, SWDD_BC-201
- * ```
+ * In manual mode the brightness follows the main control knob. The knob value
+ * in percent (0 to 100) is scaled to the brightness range (0 to 255).
  * @enddocs
+ * @trace Manual Brightness Adjustment
+ * type: impl
+ * id: SWIMPL_BC-002
+ * implements: SWDD_BC-100, SWDD_BC-101, SWDD_BC-201
  */
 static brightness_t manualBrightnessAdjustment(void)
 {
@@ -69,11 +94,13 @@ static brightness_t manualBrightnessAdjustment(void)
 
 /**
  * @docs
- * ```{impl} Brightness Controller runnable
- *    :id: SWIMPL_BC-003
- *    :implements: SWDD_BC-200, SWDD_BC-202, SWDD_BC-203
- * ```
+ * Runnable of the component. Computes the brightness in the selected mode and
+ * writes it to the RTE.
  * @enddocs
+ * @trace Brightness Controller runnable
+ * type: impl
+ * id: SWIMPL_BC-003
+ * implements: SWDD_BC-200, SWDD_BC-202, SWDD_BC-203
  */
 void brightnessController(void)
 {

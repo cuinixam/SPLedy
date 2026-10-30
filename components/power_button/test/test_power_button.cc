@@ -23,13 +23,10 @@ protected:
 };
 
 /*!
- * @docs
- * ```{test} {{ gtest.test }}
- *    :id: TS_PB-001
- *    :tests: SWDD_PB-100, SWDD_PB-201, SWDD_PB-203
- *
- * ```
- * @enddocs
+ * @trace {{ gtest.test }}
+ * type: test
+ * id: TS_PB-001
+ * tests: SWDD_PB-100, SWDD_PB-201, SWDD_PB-203
  */
 TEST_F(PowerButtonTest, InitialStateIsReleased)
 {
@@ -42,13 +39,10 @@ TEST_F(PowerButtonTest, InitialStateIsReleased)
 }
 
 /*!
- * @docs
- * ```{test} {{ gtest.test }}
- *    :id: TS_PB-002
- *    :tests: SWDD_PB-101, SWDD_PB-203
- *
- * ```
- * @enddocs
+ * @trace {{ gtest.test }}
+ * type: test
+ * id: TS_PB-002
+ * tests: SWDD_PB-101, SWDD_PB-203
  */
 TEST_F(PowerButtonTest, PressEventSentOnlyAfterDebounce)
 {
@@ -69,13 +63,10 @@ TEST_F(PowerButtonTest, PressEventSentOnlyAfterDebounce)
 }
 
 /*!
- * @docs
- * ```{test} {{ gtest.test }}
- *    :id: TS_PB-003
- *    :tests: SWDD_PB-100, SWDD_PB-101, SWDD_PB-200, SWDD_PB-202, SWDD_PB-203, SWDD_PB-300
- *
- * ```
- * @enddocs
+ * @trace {{ gtest.test }}
+ * type: test
+ * id: TS_PB-003
+ * tests: SWDD_PB-100, SWDD_PB-101, SWDD_PB-200, SWDD_PB-202, SWDD_PB-203, SWDD_PB-300
  */
 TEST_F(PowerButtonTest, FullPressAndReleaseCycle)
 {
@@ -143,13 +134,10 @@ TEST_F(PowerButtonTest, FullPressAndReleaseCycle)
 }
 
 /*!
- * @docs
- * ```{test} {{ gtest.test }}
- *    :id: TS_PB-004
- *    :tests: SWDD_PB-100, SWDD_PB-101, SWDD_PB-300
- *
- * ```
- * @enddocs
+ * @trace {{ gtest.test }}
+ * type: test
+ * id: TS_PB-004
+ * tests: SWDD_PB-100, SWDD_PB-101, SWDD_PB-300
  */
 TEST_F(PowerButtonTest, InitToReleasedTransition)
 {
