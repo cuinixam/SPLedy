@@ -1,0 +1,25 @@
+# Builds the SPL overview report from the variant reports in build/variants.
+# On CI a release run first restores those reports from the GitHub Release.
+pipeline:
+  - include:
+      file: pipeline/bootstrap.yaml
+      steps: [CreateVEnv]
+  - step: CheckCIContext
+    module: pypeline_semantic_release.check_ci_context
+  - step: DetectReleaseCommit
+    module: pypeline_semantic_release.detect_release_commit
+  - step: DownloadReleaseAssets
+    module: pypeline_semantic_release.download_release_assets
+    config:
+      include:
+        - "variant-reports-*"
+  - step: RegisterSplPaths
+    module: yanga_core.steps.register_spl_paths
+  - step: CollectVariantReports
+    module: yanga_core.steps.collect_variant_reports
+  - step: GenerateSplReportConfig
+    module: yanga_core.steps.generate_spl_report_config
+    config:
+      project_name: SPLed
+  - step: SphinxBuildReport
+    module: yanga_core.steps.sphinx_build_report
