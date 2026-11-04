@@ -6,14 +6,14 @@ authors = [{ name = "Avengineers" }]
 requires-python = "<4.0,>=3.11"
 
 dependencies = [
-    "yanga[zephyr]>=2.41,<3",
+    "yanga[zephyr]>=2.42,<3",
     "pytest>=8,<9",
-    "myst-parser>=4.0,<5",
+    "myst-parser>=5.0,<6",
     "pypeline-semantic-release>=0.4.1,<0.5.0",
-    "sphinx-rtd-theme>=2.0,<3",
-    "sphinxcontrib-mermaid>=0.9,<1",
-    "sphinx-needs>=2.0,<3",
-    "sphinx-test-reports>=1.0,<2",
+    "sphinx-rtd-theme>=3.1,<4",
+    "sphinxcontrib-mermaid>=2.0,<3",
+    "sphinx-needs>=9.1,<10",
+    "sphinx-test-reports>=3.0.1,<4",
     "sphinx-rtd-size>=0.2,<1",
     "sphinxcontrib-plantuml>=0.29,<1",
     # The ESP32 flashing tool. Zephyr's own Python needs come with yanga[zephyr].

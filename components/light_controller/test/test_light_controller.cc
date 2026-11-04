@@ -245,7 +245,7 @@ TEST(light_controller, test_correct_blink_period)
 }
 
 /**
- * @trace BlinkPeriodTests/{{ gtest.test }}/*
+ * @trace {{ gtest.test }}
  * type: test
  * id: TS_LC-003
  * tests: SWDD_LC-101

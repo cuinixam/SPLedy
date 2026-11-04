@@ -71,7 +71,6 @@ html_show_sourcelink = True
 html_theme_options = {
     "canonical_url": "",
     "analytics_id": "",  # Provided by Google in your dashboard
-    "display_version": True,
     "prev_next_buttons_location": "bottom",
     "style_external_links": True,
     "logo_only": False,
@@ -111,6 +110,7 @@ myst_enable_extensions = [
 
 # Traceability extension
 extensions.append("sphinx_needs")
+extensions.append("sphinx_test_reports")
 
 # needs_types - this option allows the setup of own need types like bugs, user_stories and more.
 needs_types = [
@@ -133,16 +133,37 @@ needs_types = [
 ]
 
 # Define own link types
-needs_extra_links = [
+needs_links = {
     # SWE.3 BP.5: link from Implementation (Software unit) to Specification (Software detailed design)
     # AND
     # SWE.2 BP.7: link from Requirements (Software Requirement) to Architecture (Software Architecture)
-    {"option": "implements", "incoming": "is implemented by", "outgoing": "implements"},
+    "implements": {"incoming": "is implemented by", "outgoing": "implements"},
     # SWE.4 BP.5: link from Test Case (Unit test specification) to Specification (Software detailed design)
-    {"option": "tests", "incoming": "is tested by", "outgoing": "tests"},
-    # SWE.4 BP.5: link from Test Case (Unit test specification) to Test Result (Unit test result)
-    {"option": "results", "incoming": "is resulted from", "outgoing": "results"},
-]
+    "tests": {"incoming": "is tested by", "outgoing": "tests"},
+    # SWE.4 BP.5: link from Test Case (Unit test specification) to Test Result (Unit test result).
+    # A test spec titled `Suite.Case` (clanguru's `{{ gtest.test }}`) links every gtest result of that test.
+    # The rule drops the `Prefix/` of a parametrized suite and the `/N` of each instance, so a TEST_P spec needs no pattern.
+    "results": {
+        "incoming": "is resulted from",
+        "outgoing": "results",
+        "default": (
+            "[[links_from_filter(\"type == 'testcase'"
+            " and current_need['title'].split('.')[0] in classname.split('/')"
+            " and case.split('/')[0] == current_need['title'].split('.')[1]\")]]"
+        ),
+    },
+}
+
+# Every test spec must have a result: a typo in the title or a test that did not run fails the build.
+needs_schema_definitions = {
+    "schemas": [
+        {
+            "id": "test-results-required",
+            "select": {"properties": {"type": {"const": "test"}}},
+            "validate": {"local": {"properties": {"results": {"minItems": 1}}, "required": ["results"]}},
+        }
+    ]
+}
 
 # The suffix of source filenames.
 source_suffix = [

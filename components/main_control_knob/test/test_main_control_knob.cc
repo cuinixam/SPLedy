@@ -35,7 +35,7 @@ class MainControlKnobTest : public TestWithParam<struct MainControlKnobParameter
 };
 
 /**
- * @trace MainControlKnobTests/{{ gtest.test }}/*
+ * @trace {{ gtest.test }}
  * type: test
  * id: TS_MCK-001
  * tests: SWDD_MCK-100, SWDD_MCK-101, SWDD_MCK-200, SWDD_MCK-201, SWDD_MCK-202, SWDD_MCK-203

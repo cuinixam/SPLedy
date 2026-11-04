@@ -44,10 +44,10 @@ INSTANTIATE_TEST_SUITE_P(
         CheckAbortParam{false, false, false, false, "No abort, not off course"}));
 
 /**
- * ```{test} CheckAbortCases/CheckAbortParamTest.ReturnsExpectedResult/*
- *    :id: TS_FC-100
- *    :tests: SWDD_FC-100, SWDD_FC-101, SWDD_FC-102
- * ```
+ * @trace {{ gtest.test }}
+ * type: test
+ * id: TS_FC-100
+ * tests: SWDD_FC-100, SWDD_FC-101, SWDD_FC-102
  */
 TEST_P(CheckAbortParamTest, ReturnsExpectedResult)
 {
@@ -69,11 +69,11 @@ INSTANTIATE_TEST_SUITE_P(
         CheckAbortParam{false, false, false, false, "No abort, not off course"}));
 
 /**
- * ```{test} FlightControllerCases/FlightControllerParamTest.SetsExpectedSelfDestructState/*
- *    :id: TS_FC-001
- *    :tests: SWDD_FC-100, SWDD_FC-101, SWDD_FC-102, SWDD_FC-103,
- *            SWDD_FC-200, SWDD_FC-201, SWDD_FC-202, SWDD_FC-203, SWDD_FC-204
- * ```
+ * @trace {{ gtest.test }}
+ * type: test
+ * id: TS_FC-001
+ * tests: SWDD_FC-100, SWDD_FC-101, SWDD_FC-102, SWDD_FC-103,
+ *   SWDD_FC-200, SWDD_FC-201, SWDD_FC-202, SWDD_FC-203, SWDD_FC-204
  */
 TEST_P(FlightControllerParamTest, SetsExpectedSelfDestructState)
 {
