@@ -715,14 +715,14 @@ files = [
 
 [[package]]
 name = "clanguru"
-version = "0.23.1"
+version = "0.23.2"
 description = "C language utils and tools based on the clang and binutils modules."
 optional = false
 python-versions = "<4.0,>=3.11"
 groups = ["main"]
 files = [
-    {file = "clanguru-0.23.1-py3-none-any.whl", hash = "sha256:b1d2ec87f1bba46b0e739909fb1f478352ad153e46f65da38c57fd227067e458"},
-    {file = "clanguru-0.23.1.tar.gz", hash = "sha256:fe4ebd1c5dd8b8911a28101461c415e42182e806597f473933426bb4cd193041"},
+    {file = "clanguru-0.23.2-py3-none-any.whl", hash = "sha256:6755478de50d87aa37c0e8067a8c10a4f18944515f06ee54b6b0af55b32c7e36"},
+    {file = "clanguru-0.23.2.tar.gz", hash = "sha256:c191c8e51555de8ff9fa5f1a0cceea6141b9d0a7c54cca48b312b6901012d05d"},
 ]
 
 [package.dependencies]
@@ -3968,14 +3968,14 @@ dev = ["pytest", "setuptools"]
 
 [[package]]
 name = "yanga"
-version = "2.42.0"
+version = "2.42.1"
 description = "Yet another ninja generator to build C/CPP projects."
 optional = false
 python-versions = "<4.0,>=3.11"
 groups = ["main"]
 files = [
-    {file = "yanga-2.42.0-py3-none-any.whl", hash = "sha256:23dd5fe46305b2be21e989df295235faeb1fd3a464c6fbab88e33b0855388525"},
-    {file = "yanga-2.42.0.tar.gz", hash = "sha256:eceffe35694ec21760d51ba5b4dbc51da2eb4afcb99e599adeb7d36b021eb731"},
+    {file = "yanga-2.42.1-py3-none-any.whl", hash = "sha256:69cfac177d3c64fea96f11e5719c3890cb96e505ffb3f28045024a7e7a117064"},
+    {file = "yanga-2.42.1.tar.gz", hash = "sha256:2ba225440404535454bfaf6d32d52c8aa52ced7c567bfb33a3379c61615a1bd8"},
 ]
 
 [package.dependencies]
