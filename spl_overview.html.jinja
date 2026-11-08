@@ -8,12 +8,12 @@
 <style>
   :root {
     --bg: #f6f7f9; --card: #ffffff; --text: #1d2330; --muted: #636b7a;
-    --line: #e3e6eb; --accent: #2f6fdb; --chip: #eef3fd; --ok: #1f8a4c;
+    --line: #e3e6eb; --accent: #2f6fdb; --chip: #eef3fd; --ok: #1f8a4c; --warn: #b3261e;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #12151b; --card: #1b1f27; --text: #e6e9ef; --muted: #9aa3b2;
-      --line: #2a303b; --accent: #7aa7ff; --chip: #233150; --ok: #5cc98a;
+      --line: #2a303b; --accent: #7aa7ff; --chip: #233150; --ok: #5cc98a; --warn: #ff8a80;
     }
   }
   * { box-sizing: border-box; }
@@ -42,6 +42,7 @@
   table { width: 100%; border-collapse: collapse; font-size: 14px; }
   td { padding: 6px 0; border-top: 1px solid var(--line); vertical-align: top; }
   td.when { color: var(--muted); text-align: right; white-space: nowrap; font-size: 13px; }
+  .commit-mismatch { color: var(--warn); font-weight: 600; }
   a.report { color: var(--accent); text-decoration: none; font-weight: 550; }
   a.report:hover { text-decoration: underline; }
   .sections { color: var(--muted); font-size: 12px; }
@@ -108,7 +109,7 @@
                 {%- if not build.reports and not build.artifacts %}no outputs{% endif %}
               </div>
             </td>
-            <td class="when">{{ build.build_time[:16] | replace("T", " ") }}{% if build.commit %}<br><code>{{ build.commit[:7] }}</code>{% endif %}</td>
+            <td class="when">{{ build.build_time[:16] | replace("T", " ") }}{% if build.commit %}<br><code>{{ build.commit[:7] }}</code>{% if overview.commit and build.commit != overview.commit %} <span class="commit-mismatch" title="Built from a different commit than this overview ({{ overview.commit[:7] }})">other commit</span>{% endif %}{% endif %}</td>
           </tr>
         {%- endfor %}
         </table>
