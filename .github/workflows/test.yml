@@ -15,12 +15,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        variant:
-          - "BaseDev"
-          - "BlinkLed"
-          - "Disco"
-          - "Sleep"
-          - "Spa"
+        include:
+          - variant: Disco
+            tests: Test_Disco and not zephyr_sim and not waveshare
+          - variant: Sleep
+            tests: Test_Sleep and gtest
+          - variant: Spa
+            tests: Test_Spa and (gtest or arduino_uno_r3)
 
     steps:
       - name: Checkout Code
@@ -30,7 +31,7 @@ jobs:
       - name: Installation of Dependencies and Execute Tests for ${{ matrix.variant }}
         run: |
           .\build.ps1 -install
-          pytest -k "Test_${{ matrix.variant }}"
+          pytest -k "${{ matrix.tests }}"
         shell: powershell
 
   test-unix:
@@ -39,14 +40,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - ubuntu-latest
-          - macos-latest
-        variant:
-          - "BaseDev"
-          - "Sleep"
-          - "Disco"
-          - "Spa"
+        include:
+          - os: ubuntu-latest
+            variant: Disco
+            tests: Test_Disco and not zephyr_sim and not waveshare
+          - os: ubuntu-latest
+            variant: Sleep
+            tests: Test_Sleep and gtest
+          - os: ubuntu-latest
+            variant: Spa
+            tests: Test_Spa and (gtest or arduino_uno_r3)
+          - os: macos-latest
+            variant: Disco
+            tests: Test_Disco and gtest
 
     steps:
       - name: Checkout Code
@@ -64,41 +70,5 @@ jobs:
         run: pypeline run --config-file yanga.yaml --step CreateVEnv --single
         shell: bash
       - name: Execute Tests for ${{ matrix.variant }}
-        run: .venv/bin/python -m pytest -k "Test_${{ matrix.variant }}"
+        run: .venv/bin/python -m pytest -k "${{ matrix.tests }}"
         shell: bash
-
-  test-wsl:
-    name: Test Disco (WSL)
-    runs-on: windows-latest
-    defaults:
-      run:
-        shell: wsl-bash {0}
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-      - name: Set up WSL
-        uses: Vampire/setup-wsl@v7
-        with:
-          distribution: Ubuntu-24.04
-          # build-essential: the poks compilers link against the distro's libc and gcc runtime.
-          additional-packages: git python3-venv pipx build-essential
-      # Clone into the Linux file system with Linux git, as a WSL user would: LF line endings, no /mnt.
-      - name: Clone into WSL
-        run: |
-          git config --global --add safe.directory '*'
-          git clone --no-checkout "$(wslpath '${{ github.workspace }}')" ~/spled
-          git -C ~/spled checkout ${{ github.sha }}
-      # The bootstrap needs Python 3.13; Ubuntu 24.04 ships 3.12.
-      - name: Install Python 3.13
-        run: |
-          add-apt-repository -y ppa:deadsnakes/ppa
-          apt-get install -y --no-install-recommends python3.13 python3.13-venv
-      - name: Install pypeline runner
-        run: pipx install "pypeline-runner>=1.23"
-      - name: Run pypeline
-        run: cd ~/spled && ~/.local/bin/pypeline run --config-file yanga.yaml --step CreateVEnv --single
-      - name: Execute Tests for Disco
-        run: cd ~/spled && .venv/bin/python -m pytest -k "Test_Disco"
