@@ -21,6 +21,9 @@ pipeline:
     module: yanga_core.steps.generate_report_config
   - step: ExecuteBuild
     module: yanga.cmake.steps
+  # Last: lists the outputs this build made, for the SPL overview.
+  - step: WritePublishManifest
+    module: yanga_core.steps.write_publish_manifest
 configs:
   - id: poks
     file: poks.json

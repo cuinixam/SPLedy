@@ -53,6 +53,8 @@ yanga run
 
 Driving the same image from the terminal (podman on macOS, a local yanga under test) is in [doc/how-to/build-in-a-container.md](doc/how-to/build-in-a-container.md).
 
+Building the SPL overview page from the built variants is in [doc/how-to/build-the-spl-overview.md](doc/how-to/build-the-spl-overview.md).
+
 How to use each platform (the Python shared library, the Zephyr simulator, flashing the ESP32-H2) is in [doc/platforms](doc/platforms/index.md).
 
 ## Credits

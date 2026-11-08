@@ -82,6 +82,8 @@ platforms:
       - step: ZephyrBuild
         module: yanga.zephyr.steps
         config: *zephyr_sim_config
+      - step: WritePublishManifest
+        module: yanga_core.steps.write_publish_manifest
 
   - name: zephyr_esp32h2
     description: Zephyr on the ESP32-H2 devkit, riscv64-zephyr-elf from poks
@@ -138,6 +140,8 @@ platforms:
       - step: ZephyrBuild
         module: yanga.zephyr.steps
         config: *zephyr_esp32h2_config
+      - step: WritePublishManifest
+        module: yanga_core.steps.write_publish_manifest
 
   - name: zephyr_esp32h2_waveshare
     description: Zephyr on the Waveshare ESP32-H2-DEV-KIT-N4, a board defined in this repository
@@ -185,3 +189,5 @@ platforms:
       - step: ZephyrBuild
         module: yanga.zephyr.steps
         config: *zephyr_esp32h2_waveshare_config
+      - step: WritePublishManifest
+        module: yanga_core.steps.write_publish_manifest

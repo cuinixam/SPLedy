@@ -11,18 +11,16 @@
 
 {% elif report_data.has_spl_scope %}
 
-# {{ report_data.project_name }} - Product Line Report
+# {{ report_data.project_name }} - Product Line Documentation
 
 **Timestamp:** {{ env.timestamp }}
 
 ```{toctree}
-:maxdepth: 1
+:maxdepth: 2
 :caption: Contents
 
-{% for file in report_data.get_variant_files_list() %}
-{{ file }}
-{% endfor %}
-
+/doc/customer_requirements/index
+/doc/software_architecture/index
 ```
 
 {% else %}

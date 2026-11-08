@@ -1,0 +1,125 @@
+{#- SPL overview. RenderSplOverview renders this to .yanga/build/index.html; every link is relative to that folder. -#}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ overview.project_name }} · Product Line</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #ffffff; --text: #1d2330; --muted: #636b7a;
+    --line: #e3e6eb; --accent: #2f6fdb; --chip: #eef3fd; --ok: #1f8a4c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12151b; --card: #1b1f27; --text: #e6e9ef; --muted: #9aa3b2;
+      --line: #2a303b; --accent: #7aa7ff; --chip: #233150; --ok: #5cc98a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 16px 48px; }
+  header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px;
+           border-bottom: 1px solid var(--line); padding-bottom: 20px; margin-bottom: 24px; }
+  h1 { margin: 0; font-size: 28px; }
+  .meta { color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 18px; }
+  .meta b { color: var(--text); font-weight: 600; }
+  .summary { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+          padding: 12px 18px; min-width: 140px; }
+  .stat .n { font-size: 24px; font-weight: 650; }
+  .stat .l { color: var(--muted); font-size: 13px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+          padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+  .card h2 { margin: 0; font-size: 19px; }
+  .desc { margin: 0; color: var(--muted); }
+  .label { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-bottom: 4px; }
+  .features { display: flex; flex-wrap: wrap; gap: 6px; }
+  .feature { font: 12px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace;
+             border: 1px solid var(--line); border-radius: 6px; padding: 0 6px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  td { padding: 6px 0; border-top: 1px solid var(--line); vertical-align: top; }
+  td.when { color: var(--muted); text-align: right; white-space: nowrap; font-size: 13px; }
+  a.report { color: var(--accent); text-decoration: none; font-weight: 550; }
+  a.report:hover { text-decoration: underline; }
+  .sections { color: var(--muted); font-size: 12px; }
+  .prov { color: var(--muted); font-size: 12px; border-top: 1px dashed var(--line); padding-top: 10px; margin-top: auto; }
+  .prov code { font-size: 12px; }
+  footer { margin-top: 32px; color: var(--muted); font-size: 13px; display: flex; gap: 18px; flex-wrap: wrap; }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+{%- set platforms = [] %}
+{%- for variant in overview.variants %}{% for build in variant.builds %}{% if build.platform not in platforms %}{% set _ = platforms.append(build.platform) %}{% endif %}{% endfor %}{% endfor %}
+<div class="wrap">
+  <header>
+    <h1>{{ overview.project_name }}</h1>
+    <div class="meta">
+      {%- if overview.commit %}
+      <span>Commit <b><code>{{ overview.commit[:7] }}</code></b></span>
+      {%- endif %}
+      <span>Generated <b>{{ overview.generated_at[:16] | replace("T", " ") }} UTC</b></span>
+      {%- for entry in overview.documentation %}
+      <span><a class="report" href="{{ entry.link }}" target="_blank" rel="noopener">{{ entry.name }}</a></span>
+      {%- endfor %}
+    </div>
+  </header>
+
+  <section class="summary">
+    <div class="stat"><div class="n">{{ overview.variants | length }}</div><div class="l">variants</div></div>
+    <div class="stat"><div class="n">{{ platforms | length }}</div><div class="l">platforms</div></div>
+    <div class="stat"><div class="n">{{ overview.variants | sum(attribute="builds", start=[]) | length }}</div><div class="l">builds</div></div>
+  </section>
+
+  <section class="grid">
+  {%- for variant in overview.variants %}
+    <article class="card">
+      <h2>{{ variant.name }}</h2>
+      {%- if variant.description %}
+      <p class="desc">{{ variant.description }}</p>
+      {%- endif %}
+      {%- if variant.features %}
+      <div>
+        <div class="label">Features</div>
+        <div class="features">
+          {%- for name, value in variant.features.items() if value is not false %}
+          <span class="feature">{{ name }}={{ "y" if value is true else value }}</span>
+          {%- endfor %}
+        </div>
+      </div>
+      {%- endif %}
+      <div>
+        <div class="label">Builds</div>
+        <table>
+        {%- for build in variant.builds %}
+          <tr>
+            <td>
+              <b>{{ build.platform }}{% if build.build_type %} · {{ build.build_type }}{% endif %}</b>
+              <div class="sections">
+                {%- for entry in build.reports %}
+                <a class="report" href="{{ entry.link }}" target="_blank" rel="noopener">{{ entry.name }}</a>
+                {%- endfor %}
+                {%- for entry in build.artifacts %}
+                · <a href="{{ entry.link }}" download>{{ entry.name }}</a>
+                {%- endfor %}
+                {%- if not build.reports and not build.artifacts %}no outputs{% endif %}
+              </div>
+            </td>
+            <td class="when">{{ build.build_time[:16] | replace("T", " ") }}{% if build.commit %}<br><code>{{ build.commit[:7] }}</code>{% endif %}</td>
+          </tr>
+        {%- endfor %}
+        </table>
+      </div>
+    </article>
+  {%- endfor %}
+  </section>
+
+  <footer>
+    <a href="https://github.com/cuinixam/SPLed#readme">README</a><a href="https://github.com/cuinixam/SPLed">Repository</a>
+  </footer>
+</div>
+</body>
+</html>

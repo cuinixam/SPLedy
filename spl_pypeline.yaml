@@ -1,25 +1,30 @@
-# Builds the SPL overview report from the variant reports in build/variants.
-# On CI a release run first restores those reports from the GitHub Release.
+# Builds the SPL documentation report and the SPL overview (.yanga/build/index.html)
+# from the publish manifests the variant builds wrote.
 pipeline:
   - include:
       file: pipeline/bootstrap.yaml
       steps: [CreateVEnv]
   - step: CheckCIContext
     module: pypeline_semantic_release.check_ci_context
-  - step: DetectReleaseCommit
-    module: pypeline_semantic_release.detect_release_commit
-  - step: DownloadReleaseAssets
-    module: pypeline_semantic_release.download_release_assets
-    config:
-      include:
-        - "variant-reports-*"
   - step: RegisterSplPaths
+    description: Read the build directory settings from yanga.ini or pyproject.toml
     module: yanga_core.steps.register_spl_paths
-  - step: CollectVariantReports
-    module: yanga_core.steps.collect_variant_reports
   - step: GenerateSplReportConfig
+    description: Write the report config that makes index.md render its SPL branch
     module: yanga_core.steps.generate_spl_report_config
     config:
       project_name: SPLed
   - step: SphinxBuildReport
+    description: Build conf.py and index.md into .yanga/build/spl/reports
     module: yanga_core.steps.sphinx_build_report
+  - step: WritePublishManifest
+    description: Record the SPL documentation in .yanga/build/spl/publish_manifest.json
+    module: yanga_core.steps.write_publish_manifest
+  - step: CollectPublishManifests
+    description: Read the manifests the variant builds left under .yanga/build/variants
+    module: yanga_core.steps.collect_publish_manifests
+  - step: RenderSplOverview
+    description: Fill spl_overview.html.jinja and write .yanga/build/index.html
+    module: yanga_core.steps.render_spl_overview
+    config:
+      project_name: SPLed

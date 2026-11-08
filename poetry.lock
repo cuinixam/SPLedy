@@ -2477,14 +2477,14 @@ west = ">=1.5,<2"
 
 [[package]]
 name = "pypeline-semantic-release"
-version = "0.4.2"
+version = "0.5.1"
 description = "Pypeline step for semantic release."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "pypeline_semantic_release-0.4.2-py3-none-any.whl", hash = "sha256:e9fda0db64b2c01bd3c8a1637a766e9faed007e3d4cb096525de2aa38b5a88bc"},
-    {file = "pypeline_semantic_release-0.4.2.tar.gz", hash = "sha256:97849ca5de20be5d4327d0dab23dd79c4c2357de14772e8e1b82397dee4eb312"},
+    {file = "pypeline_semantic_release-0.5.1-py3-none-any.whl", hash = "sha256:9ef3602f4659f600b243a09d243cb3c861c5446eacbf6210bc79065efed0781b"},
+    {file = "pypeline_semantic_release-0.5.1.tar.gz", hash = "sha256:b1e5bd84143f9d0250da5e3b78c900587535d8a4419390898e93b2fdb0fee016"},
 ]
 
 [package.dependencies]
@@ -3968,14 +3968,14 @@ dev = ["pytest", "setuptools"]
 
 [[package]]
 name = "yanga"
-version = "2.42.1"
+version = "2.43.0"
 description = "Yet another ninja generator to build C/CPP projects."
 optional = false
 python-versions = "<4.0,>=3.11"
 groups = ["main"]
 files = [
-    {file = "yanga-2.42.1-py3-none-any.whl", hash = "sha256:69cfac177d3c64fea96f11e5719c3890cb96e505ffb3f28045024a7e7a117064"},
-    {file = "yanga-2.42.1.tar.gz", hash = "sha256:2ba225440404535454bfaf6d32d52c8aa52ced7c567bfb33a3379c61615a1bd8"},
+    {file = "yanga-2.43.0-py3-none-any.whl", hash = "sha256:482299a91ec70b96a3cbd91719b827f78efde1bf66b976161b9e758a21b34cb2"},
+    {file = "yanga-2.43.0.tar.gz", hash = "sha256:da6d1169640c6f2688bad79e4b350e9e3ac655210e4f7919a484c0d2e7c4dec1"},
 ]
 
 [package.dependencies]
@@ -3998,25 +3998,26 @@ pypeline-runner = ">=1.41,<2"
 pyyaml = {version = ">=6", optional = true, markers = "extra == \"zephyr\""}
 requests = {version = ">=2.32.4", optional = true, markers = "extra == \"zephyr\""}
 typer = ">=0,<1"
-yanga-core = ">=0.13.3,<1"
+yanga-core = ">=0.14,<1"
 
 [package.extras]
 zephyr = ["jsonschema (>=4)", "packaging (>=23)", "pyelftools (>=0.29)", "pykwalify (>=1.8)", "pyyaml (>=6)", "requests (>=2.32.4)"]
 
 [[package]]
 name = "yanga-core"
-version = "0.13.3"
+version = "0.14.0"
 description = "Core library for C/C++ software product line engineering."
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "yanga_core-0.13.3-py3-none-any.whl", hash = "sha256:57a38491b70ab5058d397da700340c31069423bcbfbbdd51c414f6260b227588"},
-    {file = "yanga_core-0.13.3.tar.gz", hash = "sha256:c85dacf1952dd332dcc30ef24477ba0e7aa96aedb4b86b3b2600bab009afb602"},
+    {file = "yanga_core-0.14.0-py3-none-any.whl", hash = "sha256:372e51698cd3a8cf60bf0d043b838168b30b3bbcb7a83180a3c152fca3fb757d"},
+    {file = "yanga_core-0.14.0.tar.gz", hash = "sha256:871f826b4a6fb372647710243723ce3a33824d7e5d43134ec6736c0a384f6c64"},
 ]
 
 [package.dependencies]
 clanguru = ">=0,<1"
+jinja2 = ">=3.1,<4"
 kconfiglib = ">=14,<15"
 kspl = ">=1.10.1,<2"
 mashumaro = ">=3.13,<4"
@@ -4140,4 +4141,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = "<4.0,>=3.11"
-content-hash = "375a2966ef276c4a9facf81e14df7766ded3fe468c60048c5da5d60cb71a3aec"
+content-hash = "349eaca8d5c01cb2c55025c70930af49f219b6e3048951337abe78f77a1b6be3"
