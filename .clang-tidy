@@ -1,0 +1,3 @@
+# Analyse product code in its shipped form: the gtest platform makes SPLE_TESTABLE_STATIC empty.
+ExtraArgs: ['-USPLE_TESTABLE_STATIC', '-DSPLE_TESTABLE_STATIC=static']
+Checks: 'clang-analyzer-*,bugprone-*,cert-*,misc-*,readability-*,-readability-identifier-length,-misc-include-cleaner'

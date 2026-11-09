@@ -16,6 +16,8 @@ platforms:
                 - "_*"
       #- step: CppCheckCMakeGenerator
       #  module: yanga.cmake.cppcheck
+      - step: ClangTidyCMakeGenerator
+        module: yanga.cmake.clang_tidy
       - step: SphinxTestReportCMakeGenerator
         module: yanga.cmake.sphinx_test_report
       - step: TargetsDataCMakeGenerator
