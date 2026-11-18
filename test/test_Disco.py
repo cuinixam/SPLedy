@@ -1,7 +1,9 @@
+import re
 import sys
 from pathlib import Path
 
 import pytest
+from pypeline_semantic_release.check_ci_context import CISystem
 
 from spled_lib import POWER_BUTTON_KEY, Variant, build_dir, find_library
 from yanga_core.commands.run import RunCommand, RunCommandConfig
@@ -12,6 +14,13 @@ PRESS_DEBOUNCE_STEPS = 10
 LIGHT_OFF = "#000000"
 # CONFIG_COLOR_GREEN at the default brightness of 128.
 LIGHT_GREEN = "#008000"
+# A resolved `source:` link to a coverage page: href, fragment line, link text path and line.
+COVERAGE_LINK = re.compile(r'<a\b[^>]*\bhref="([^"#]*coverage/[^"#]*\.html)#l(\d+)"[^>]*>([^<]*):(\d+)</a>')
+VSCODE_LINK = re.compile(r'href="vscode://file/([^"]*):(\d+)"')
+# The source docs pages of light_controller, relative to a report directory.
+LIGHT_CONTROLLER_PAGES = Path(".yanga/build/variants", VARIANT_NAME, "gtest/light_controller")
+# The build picks the resolver profile with CheckCIContext; detect CI the same way.
+IS_CI = any(detector.detect() for system in CISystem if (detector := system.get_detector()))
 
 
 @pytest.fixture(scope="module")
@@ -32,6 +41,22 @@ def variant() -> Variant:
     assert RunCommand().do_run(config) == 0, "Building the shared library failed"
 
     return Variant(find_library(build_dir(Path.cwd(), VARIANT_NAME), VARIANT_NAME))
+
+
+@pytest.fixture(scope="module")
+def gtest_build_dir() -> Path:
+    """Build the variant report and the light_controller component report on gtest."""
+    for target in ("report", "light_controller_report"):
+        config = RunCommandConfig(
+            project_dir=Path.cwd(),
+            platform="gtest",
+            variant_name=VARIANT_NAME,
+            not_interactive=True,
+            target=target,
+        )
+        assert RunCommand().do_run(config) == 0, f"Building {target} failed"
+
+    return Path.cwd() / ".yanga/build/variants" / VARIANT_NAME / "gtest"
 
 
 class Test_Disco:
@@ -79,3 +104,49 @@ class Test_Disco:
         assert variant.led_colour() == LIGHT_OFF, "The light must stay off until the press is debounced"
         variant.step()
         assert variant.led_colour() == LIGHT_GREEN
+
+    @pytest.mark.parametrize("report", ["reports", "light_controller/reports"])
+    def test_gtest_source_docs_link_to_coverage_lines(self, gtest_build_dir: Path, report: str):
+        # Arrange
+        page = gtest_build_dir / report / LIGHT_CONTROLLER_PAGES / "light_controller.c.html"
+
+        # Act
+        html = page.read_text(encoding="utf-8")
+        links = COVERAGE_LINK.findall(html)
+
+        # Assert
+        assert links, f"No declaration links to its coverage page in {page}"
+        source_lines = (Path.cwd() / links[0][2]).read_text(encoding="utf-8").splitlines()
+        for href, fragment_line, text_path, text_line in links:
+            assert fragment_line == text_line, f"{href}#l{fragment_line} does not point to line {text_line}"
+            assert text_path.endswith("light_controller.c")
+            assert 1 <= int(fragment_line) <= len(source_lines), f"{href}#l{fragment_line} is outside {text_path}"
+            assert (page.parent / href).is_file(), f"{href} does not exist"
+        declaration_line = next(i for i, line in enumerate(source_lines, 1) if "void lightController(void)" in line)
+        assert str(declaration_line) in {fragment_line for _, fragment_line, _, _ in links}, f"lightController does not link to #l{declaration_line}"
+        assert 'href="source:' not in html, "An unresolved source: link is left"
+        assert 'href="vscode://' not in html, "A production declaration fell back to VS Code"
+
+    def test_gtest_test_source_docs_link_to_vscode_locally_and_plain_text_on_ci(self, gtest_build_dir: Path):
+        # Arrange
+        page = gtest_build_dir / "reports" / LIGHT_CONTROLLER_PAGES / "test_light_controller.cc.html"
+
+        # Act
+        html = page.read_text(encoding="utf-8")
+        links = VSCODE_LINK.findall(html)
+
+        # Assert
+        if IS_CI:
+            # The ci profile falls back to default (gcovr only): test sources stay plain text.
+            assert 'href="vscode://' not in html, "A test source links to VS Code on CI"
+            assert 'href="source:' not in html, "An unresolved source: link is left"
+            assert re.search(r">components/light_controller/test/test_light_controller\.cc:\d+<", html), f"No plain text source location in {page}"
+            return
+        assert any(
+            path.endswith("test_light_controller.cc")
+            and Path(path).is_absolute()
+            and Path(path).is_relative_to(Path.cwd().resolve())
+            and Path(path).is_file()
+            and 1 <= int(line) <= len(Path(path).read_text(encoding="utf-8").splitlines())
+            for path, line in links
+        ), f"No declaration links to VS Code at a line of the test file in {page}"

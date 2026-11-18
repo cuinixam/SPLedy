@@ -107,6 +107,8 @@ myst_enable_extensions = [
     "html_admonition",
     "html_image",
 ]
+# MyST drops links with unknown schemes; yanga resolves the `source:` links after the build.
+myst_url_schemes = ["http", "https", "mailto", "ftp", "source"]
 
 # Traceability extension
 extensions.append("sphinx_needs")

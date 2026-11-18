@@ -24,6 +24,11 @@ platforms:
         module: yanga.cmake.targets_data
       - step: ReportCMakeGenerator
         module: yanga.cmake.reports
+        config:
+            source_links: true
+            resolvers:
+              default: [gcovr]
+              local: [gcovr, vscode]
     configs:
       - id: west
         content:
