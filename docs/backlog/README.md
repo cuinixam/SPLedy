@@ -10,8 +10,6 @@
 
 ### In Progress
 
-- [SPLED-001 — Source links in the gtest reports](spled-001.md)
-
 ### Blocked
 
 ### Ready
