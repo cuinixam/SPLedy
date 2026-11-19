@@ -7,6 +7,10 @@ variants:
   - light_application
   feature_selection:
     file: variants/Disco/config.txt
+  testing:
+  - framework: gtest
+    sources:
+    - test_disco.cc
   platforms:
     gtest:
       components: [test_integrations_spled]

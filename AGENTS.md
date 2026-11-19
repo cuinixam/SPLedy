@@ -111,6 +111,7 @@ target. A platform's selection cannot be edited without a variant.
   path: components/my_component
   sources: [src/my_component.c]
   testing:
+  - framework: gtest
     sources: [test/test_my_component.cc]  # GoogleTest tests
   include_directories:
     - path: src
@@ -127,6 +128,9 @@ variants:
   components: [rte, spled, power_button]  # Core components
   feature_selection:
     file: variants/MyVariant/config.txt
+  testing:
+  - framework: gtest
+    sources: [test_myvariant.cc]  # variant test, next to this yaml file
   platforms:
     gtest:
       components: [test_integrations_spled]  # Platform-specific components

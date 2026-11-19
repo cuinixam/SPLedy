@@ -3968,14 +3968,14 @@ dev = ["pytest", "setuptools"]
 
 [[package]]
 name = "yanga"
-version = "2.46.0"
+version = "2.47.0"
 description = "Yet another ninja generator to build C/CPP projects."
 optional = false
 python-versions = "<4.0,>=3.11"
 groups = ["main"]
 files = [
-    {file = "yanga-2.46.0-py3-none-any.whl", hash = "sha256:38513253dac13af4d2fae0c47458b77a0c6dd0c201f33a32880c824650941a43"},
-    {file = "yanga-2.46.0.tar.gz", hash = "sha256:6925d86361cb0e0b8cc6ac6a6f7c440191e3f44c9e30fd05ab5d3906a24b0c7a"},
+    {file = "yanga-2.47.0-py3-none-any.whl", hash = "sha256:03ecd3ec0bc61de5ae704b81238fb12f36bd364efb2a9f6f44e6f6e4be9eff82"},
+    {file = "yanga-2.47.0.tar.gz", hash = "sha256:c2f9dfdad2369de917d94906525996625bd5e573d0e17248a7ae3d4b874dbea3"},
 ]
 
 [package.dependencies]
@@ -3999,21 +3999,21 @@ pypeline-semantic-release = ">=0.5.1,<1"
 pyyaml = {version = ">=6", optional = true, markers = "extra == \"zephyr\""}
 requests = {version = ">=2.32.4", optional = true, markers = "extra == \"zephyr\""}
 typer = ">=0,<1"
-yanga-core = ">=0.14.2,<1"
+yanga-core = ">=0.16,<1"
 
 [package.extras]
 zephyr = ["jsonschema (>=4)", "packaging (>=23)", "pyelftools (>=0.29)", "pykwalify (>=1.8)", "pyyaml (>=6)", "requests (>=2.32.4)"]
 
 [[package]]
 name = "yanga-core"
-version = "0.14.2"
+version = "0.16.0"
 description = "Core library for C/C++ software product line engineering."
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "yanga_core-0.14.2-py3-none-any.whl", hash = "sha256:ab77d2b0322eabfa78f643622086024f425c9fe4e09ca2017bcab91d91657e35"},
-    {file = "yanga_core-0.14.2.tar.gz", hash = "sha256:800b88879f37cc7d73ca847b0dd30a90875bab292d7b598f73673cea2a7581ce"},
+    {file = "yanga_core-0.16.0-py3-none-any.whl", hash = "sha256:51a40726403b41d828b95bc620e9f9a51a5bb748d470efdf85871e92997e82a6"},
+    {file = "yanga_core-0.16.0.tar.gz", hash = "sha256:c6177b6098da922dc77c2161a696340f061bf41a16a88f1b57e6adb26732ed68"},
 ]
 
 [package.dependencies]
@@ -4142,4 +4142,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = "<4.0,>=3.11"
-content-hash = "dd05f09b134f62437f8bd07f9f45694662e259537cf3efe23ec10e0a63029187"
+content-hash = "49b74af3223802080d3006e64131e5f72c66baff87c564671a86d43a16c69b79"

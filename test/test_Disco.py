@@ -1,6 +1,7 @@
 import re
 import sys
 from pathlib import Path
+from xml.etree import ElementTree
 
 import pytest
 from pypeline_semantic_release.check_ci_context import CISystem
@@ -21,6 +22,8 @@ VSCODE_LINK = re.compile(r'href="vscode://file/([^"]*):(\d+)"')
 LIGHT_CONTROLLER_PAGES = Path(".yanga/build/variants", VARIANT_NAME, "gtest/light_controller")
 # The build picks the resolver profile with CheckCIContext; detect CI the same way.
 IS_CI = any(detector.detect() for system in CISystem if (detector := system.get_detector()))
+# The variant report's link to the variant test coverage page, as sphinx renders the toctree entry.
+VARIANT_TEST_COVERAGE_LINK = re.compile(r'<a\b[^>]*\bhref="variant_test_coverage/index\.html"[^>]*>Variant Test Coverage</a>')
 
 
 @pytest.fixture(scope="module")
@@ -126,6 +129,21 @@ class Test_Disco:
         assert str(declaration_line) in {fragment_line for _, fragment_line, _, _ in links}, f"lightController does not link to #l{declaration_line}"
         assert 'href="source:' not in html, "An unresolved source: link is left"
         assert 'href="vscode://' not in html, "A production declaration fell back to VS Code"
+
+    def test_gtest_variant_test_runs_and_reports_its_coverage(self, gtest_build_dir: Path):
+        # Arrange
+        junit = gtest_build_dir / "variant_test/variant_test_junit.xml"
+        coverage_page = gtest_build_dir / "reports/variant_test_coverage/index.html"
+
+        # Act
+        suites = ElementTree.parse(junit).getroot()
+        report = (gtest_build_dir / "reports/index.html").read_text(encoding="utf-8")
+
+        # Assert
+        assert int(suites.get("tests", 0)) > 0, f"No variant test ran in {junit}"
+        assert suites.get("failures") == "0" and suites.get("errors") == "0", f"The variant test failed, see {junit}"
+        assert "spled.c" in coverage_page.read_text(encoding="utf-8"), f"spled.c is missing from {coverage_page}"
+        assert VARIANT_TEST_COVERAGE_LINK.search(report), "The variant report does not link to the variant test coverage"
 
     def test_gtest_test_source_docs_link_to_vscode_locally_and_plain_text_on_ci(self, gtest_build_dir: Path):
         # Arrange

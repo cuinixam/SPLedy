@@ -21,6 +21,7 @@ components:
   sources:
   - src/hello_gmock.c
   testing:
+  - framework: gtest
     sources:
     - test/test_hello_gmock_suite.cc
   include_directories:
@@ -33,6 +34,7 @@ components:
   sources:
   - src/flight_controller.c
   testing:
+  - framework: gtest
     sources:
     - test/test_flight_controller.cc
   include_directories:
@@ -45,6 +47,7 @@ components:
   sources:
   - src/spled.c
   testing:
+  - framework: gtest
     sources:
     - test/test_spled.cc
   include_directories:
@@ -65,6 +68,7 @@ components:
   sources:
   - src/power_signal_processing.c
   testing:
+  - framework: gtest
     sources:
     - test/test_power_signal_processing.cc
   include_directories:
@@ -79,6 +83,7 @@ components:
   sources:
   - src/light_controller.c
   testing:
+  - framework: gtest
     sources:
     - test/test_light_controller.cc
   include_directories:
@@ -93,6 +98,7 @@ components:
   sources:
   - src/power_button.c
   testing:
+  - framework: gtest
     sources:
     - test/test_power_button.cc
   include_directories:
@@ -121,6 +127,7 @@ components:
   sources:
   - src/main_control_knob.c
   testing:
+  - framework: gtest
     sources:
     - test/test_main_control_knob.cc
   include_directories:
@@ -142,6 +149,7 @@ components:
   - brightness_controller
   - light_application
   testing:
+  - framework: gtest
     sources:
     - spled/test/test_spled_integration.cc
   required_components:
@@ -159,6 +167,7 @@ components:
   sources:
   - src/brightness_controller.c
   testing:
+  - framework: gtest
     sources:
     - test/test_brightness_controller.cc
   include_directories:
