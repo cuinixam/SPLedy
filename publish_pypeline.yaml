@@ -1,0 +1,23 @@
+# Builds the site folder .yanga/build/site: the SPL overview and the reports it links to.
+# The SPL test is the gate: when it fails, no site folder is built. Only the build and deploy
+# jobs of .github/workflows/test.yml deploy it (see doc/how-to/publish-the-spl-overview.md).
+pipeline:
+  - include:
+      file: pipeline/bootstrap.yaml
+      steps: [CreateVEnv]
+  - step: TestSpl
+    description: Build the variants of the SPL test and the overview, and check it
+    run: python -m pytest test/test_spl.py
+  - step: CollectSite
+    description: Copy the overview and the reports it links to into .yanga/build/site
+    file: pipeline/collect_site.py
+    config:
+      source: .yanga/build
+      target: .yanga/build/site
+      include:
+        - index.html
+        - spl/reports/**/*
+        - variants/**/reports/**/*
+      exclude:
+        - "**/.doctrees/**"
+        - "**/.buildinfo*"

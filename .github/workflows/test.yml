@@ -8,6 +8,9 @@ on:
 
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   test-windows:
     name: Test ${{ matrix.variant }} (Windows)
@@ -72,3 +75,56 @@ jobs:
       - name: Execute Tests for ${{ matrix.variant }}
         run: .venv/bin/python -m pytest -k "${{ matrix.tests }}"
         shell: bash
+
+  # Publishes the SPL overview after every test job passed, only for a push to develop.
+  build:
+    name: Build the SPL overview site
+    needs: [test-windows, test-unix]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: 3.13
+      - name: Install pypeline runner
+        run: pip install "pypeline-runner>=1.23"
+        shell: bash
+      - name: Create the project venv
+        run: pypeline run --config-file yanga.yaml --step CreateVEnv --single
+        shell: bash
+      # The venv's pypeline, because the pypeline outside the venv cannot load the project's steps.
+      - name: Run the SPL test and collect the site
+        run: .venv/bin/pypeline run --config-file publish_pypeline.yaml
+        shell: bash
+      # v5 and include-hidden-files: each variant report keeps pages under reports/.yanga/.
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: .yanga/build/site
+          include-hidden-files: true
+
+  # A job of its own, so the Pages permissions stay away from the build and its tools.
+  deploy:
+    name: Deploy the SPL overview site
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    # On this job only, so test runs are not held back. A newer deploy waits for the running one.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

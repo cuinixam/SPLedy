@@ -31,7 +31,7 @@ create_yanga_build_dir = true
 exclude_dirs = [".yanga"]
 
 [tool.pytest.ini_options]
-pythonpath = ["test", "platforms/pc_gui"]
+pythonpath = ["test", "platforms/pc_gui", "pipeline"]
 testpaths = ["test"]
 junit_logging = "all"
 addopts = [
