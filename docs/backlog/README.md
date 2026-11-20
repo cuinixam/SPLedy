@@ -14,6 +14,8 @@
 
 ### Ready
 
+- [SPLED-003 — Publish the SPL overview of develop to GitHub Pages](spled-003.md)
+
 ---
 
 ## Notes
