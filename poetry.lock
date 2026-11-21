@@ -1047,14 +1047,14 @@ files = [
 
 [[package]]
 name = "gcovr"
-version = "8.6"
+version = "8.8"
 description = "Generate C/C++ code coverage reports with gcov"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "gcovr-8.6-py3-none-any.whl", hash = "sha256:dbf9d87c38042752ad6f530aa8210427e22b526611bb7b7bfed0e81977d1f1ef"},
-    {file = "gcovr-8.6.tar.gz", hash = "sha256:b2e7042abca9321cadbab8a06eb34d19f801b831557b28cdc30a029313de8b9e"},
+    {file = "gcovr-8.8-py3-none-any.whl", hash = "sha256:a5c3e3d4a9c8ab4a95aa8e4b072fcaec7962b1d9fb2add3f10645f649ef29545"},
+    {file = "gcovr-8.8.tar.gz", hash = "sha256:0320230a432c033c1a41f34ba943082f450008c789bee05d414e532f380fd788"},
 ]
 
 [package.dependencies]
@@ -1064,7 +1064,7 @@ lxml = "*"
 pygments = ">=2.13.0"
 
 [package.extras]
-dev = ["bandit[toml]", "build", "cmake", "coverage", "mypy", "nox", "pre-commit", "pygments (==2.19.2)", "pyinstaller (>=6.16.0,<6.17.0)", "pylint (<4.0.0)", "pytest", "pytest-check", "pytest-cov", "pytest-env", "pytest-timeout", "pytest-xdist", "pywin32 ; sys_platform == \"win32\"", "requests", "ruff (>=0.13.2,<0.14.0)", "tomli (>=1.1.0) ; python_version < \"3.11\"", "twine", "wheel", "yamllint", "yaxmldiff"]
+dev = ["bandit[toml]", "build", "cmake", "coverage", "mypy", "nox", "pre-commit", "pygments (==2.21.0)", "pyinstaller (>=6.16.0,<6.17.0)", "pylint (<4.0.0)", "pytest", "pytest-check", "pytest-cov", "pytest-env", "pytest-timeout", "pytest-xdist", "pywin32 ; sys_platform == \"win32\"", "requests", "ruff (>=0.16.7,<0.17.0)", "tomli (>=1.1.0) ; python_version < \"3.11\"", "twine", "wheel", "yamllint", "yaxmldiff", "zizmor (>=1.31.1,<1.32.0)"]
 
 [[package]]
 name = "gitdb"
@@ -3968,21 +3968,22 @@ dev = ["pytest", "setuptools"]
 
 [[package]]
 name = "yanga"
-version = "2.47.0"
+version = "2.49.0"
 description = "Yet another ninja generator to build C/CPP projects."
 optional = false
 python-versions = "<4.0,>=3.11"
 groups = ["main"]
 files = [
-    {file = "yanga-2.47.0-py3-none-any.whl", hash = "sha256:03ecd3ec0bc61de5ae704b81238fb12f36bd364efb2a9f6f44e6f6e4be9eff82"},
-    {file = "yanga-2.47.0.tar.gz", hash = "sha256:c2f9dfdad2369de917d94906525996625bd5e573d0e17248a7ae3d4b874dbea3"},
+    {file = "yanga-2.49.0-py3-none-any.whl", hash = "sha256:7f517f36e517cb753d313a7836f0ced1eeb7eca3ebcaa2c2380bfef2f1de6951"},
+    {file = "yanga-2.49.0.tar.gz", hash = "sha256:bdba5d311d0c1e91a212c86911139ea2cb2cc67f010fde6be148f1026489a616"},
 ]
 
 [package.dependencies]
 clanguru = ">=0.24,<1"
 cookiecutter = ">=2.1,<3"
 customtkinter = ">=5.2,<6"
-gcovr = ">=8.3,<9"
+gcovr = ">=8.7,<8.9"
+jinja2 = ">=3.1,<4"
 jsonschema = {version = ">=4", optional = true, markers = "extra == \"zephyr\""}
 kspl = ">=1.10.1,<2"
 loguru = ">=0,<1"
@@ -3999,21 +4000,21 @@ pypeline-semantic-release = ">=0.5.1,<1"
 pyyaml = {version = ">=6", optional = true, markers = "extra == \"zephyr\""}
 requests = {version = ">=2.32.4", optional = true, markers = "extra == \"zephyr\""}
 typer = ">=0,<1"
-yanga-core = ">=0.16,<1"
+yanga-core = ">=0.17,<1"
 
 [package.extras]
 zephyr = ["jsonschema (>=4)", "packaging (>=23)", "pyelftools (>=0.29)", "pykwalify (>=1.8)", "pyyaml (>=6)", "requests (>=2.32.4)"]
 
 [[package]]
 name = "yanga-core"
-version = "0.16.0"
+version = "0.17.0"
 description = "Core library for C/C++ software product line engineering."
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "yanga_core-0.16.0-py3-none-any.whl", hash = "sha256:51a40726403b41d828b95bc620e9f9a51a5bb748d470efdf85871e92997e82a6"},
-    {file = "yanga_core-0.16.0.tar.gz", hash = "sha256:c6177b6098da922dc77c2161a696340f061bf41a16a88f1b57e6adb26732ed68"},
+    {file = "yanga_core-0.17.0-py3-none-any.whl", hash = "sha256:9f16d279918327ae61e07118a21a9180e799d35f7e2ac1ac66e808b920ffdaaa"},
+    {file = "yanga_core-0.17.0.tar.gz", hash = "sha256:f326fdf40ada3806bd43026254f297834fe00f3f5770534029c23dbec5ae3346"},
 ]
 
 [package.dependencies]
@@ -4142,4 +4143,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = "<4.0,>=3.11"
-content-hash = "49b74af3223802080d3006e64131e5f72c66baff87c564671a86d43a16c69b79"
+content-hash = "df1a629b5cd7864f64157ae150c4550997cb698e904cee2a23d5f4506882f0e0"

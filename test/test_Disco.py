@@ -16,7 +16,7 @@ LIGHT_OFF = "#000000"
 # CONFIG_COLOR_GREEN at the default brightness of 128.
 LIGHT_GREEN = "#008000"
 # A resolved `source:` link to a coverage page: href, fragment line, link text path and line.
-COVERAGE_LINK = re.compile(r'<a\b[^>]*\bhref="([^"#]*coverage/[^"#]*\.html)#l(\d+)"[^>]*>([^<]*):(\d+)</a>')
+COVERAGE_LINK = re.compile(r'<a\b[^>]*\bhref="([^"#]*coverage/[^"#]*\.html)#[lL](\d+)"[^>]*>([^<]*):(\d+)</a>')
 VSCODE_LINK = re.compile(r'href="vscode://file/([^"]*):(\d+)"')
 # The source docs pages of light_controller, relative to a report directory.
 LIGHT_CONTROLLER_PAGES = Path(".yanga/build/variants", VARIANT_NAME, "gtest/light_controller")
@@ -142,7 +142,8 @@ class Test_Disco:
         # Assert
         assert int(suites.get("tests", 0)) > 0, f"No variant test ran in {junit}"
         assert suites.get("failures") == "0" and suites.get("errors") == "0", f"The variant test failed, see {junit}"
-        assert "spled.c" in coverage_page.read_text(encoding="utf-8"), f"spled.c is missing from {coverage_page}"
+        # gcovr's nested report gives each covered file its own page next to the index.
+        assert any(coverage_page.parent.glob("index.spled.c.*.html")), f"spled.c is missing from {coverage_page.parent}"
         assert VARIANT_TEST_COVERAGE_LINK.search(report), "The variant report does not link to the variant test coverage"
 
     def test_gtest_test_source_docs_link_to_vscode_locally_and_plain_text_on_ci(self, gtest_build_dir: Path):
